@@ -3,3 +3,5 @@
   gather_facts: no
   tasks:
     - ping:
+      register: result
+    - debug: result
