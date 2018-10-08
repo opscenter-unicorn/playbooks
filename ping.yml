@@ -2,6 +2,5 @@
 - hosts: all
   gather_facts: no
   tasks:
-    - ping:
-      register: result
-    - debug: result
+    - name: ping hosts
+        ping:
