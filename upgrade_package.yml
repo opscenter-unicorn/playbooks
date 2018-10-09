@@ -1,0 +1,37 @@
+- name: Play to run Yum Upgrade
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: Yum Upgrade
+    yum:
+      name: '*'
+      state: latest
+    when: ansible_pkg_mgr == "yum"
+    register: upgrade_result
+#    notify:
+#      - Debug_task
+
+  - name: apt Upgrade
+    apt:
+      name: '*'
+      state: latest
+      force_apt_get: yes
+    when: ansible_pkg_mgr == "apt"
+    register: upgrade_result
+#    notify:
+#      - Debug_task
+
+  - name: dnf Upgrade
+    dnf:
+      name: '*'
+      state: latest
+    when: ansible_pkg_mgr == "dnf"
+    register: upgrade_result
+#    notify:
+#      - Debug_task
+
+  handlers:
+  - name: Debug_task
+    debug:
+      msg: "{{ upgrade_result }}"
